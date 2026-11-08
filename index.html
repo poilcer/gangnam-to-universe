@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>강남역에서 우주 끝까지</title>
+<style>
+  html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;touch-action:none;user-select:none}
+  canvas{display:block;cursor:grab}
+  #hud{position:fixed;left:14px;top:12px;font-size:12px;line-height:1.6;text-shadow:0 1px 3px #000c;pointer-events:none;z-index:3}
+  #hud b{color:#9fd8ff}
+  #alt{position:fixed;right:16px;bottom:16px;text-align:right;pointer-events:none;z-index:3;text-shadow:0 1px 4px #000}
+  #alt .v{font-size:26px;font-weight:600;letter-spacing:.02em}
+  #alt .p{font-size:13px;opacity:.75}
+  #scale{position:fixed;right:16px;top:60px;bottom:110px;width:4px;background:#ffffff22;border-radius:4px;z-index:3;pointer-events:none}
+  #scale i{position:absolute;left:-5px;width:14px;height:14px;border-radius:50%;background:#9fd8ff;box-shadow:0 0 10px #9fd8ff;margin-top:-7px}
+  #cap{position:fixed;left:50%;bottom:13%;transform:translateX(-50%);text-align:center;z-index:3;pointer-events:none;opacity:0;transition:opacity .9s}
+  #cap .t{font-size:30px;font-weight:600;letter-spacing:.04em;text-shadow:0 0 22px #3a8cff99,0 2px 8px #000}
+  #cap .s{font-size:14px;opacity:.85;margin-top:6px;text-shadow:0 1px 4px #000}
+  #btns{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:8px;z-index:4}
+  #btns button{padding:10px 16px;border-radius:999px;border:1px solid #ffffff44;background:#0008;color:#fff;font-size:13px;cursor:pointer;backdrop-filter:blur(4px)}
+  #btns button.on{border-color:#9fd8ff;color:#cfeaff;box-shadow:0 0 14px #2f8cff66}
+  #up{border-color:#ffd27a !important}
+  #dest{position:fixed;left:14px;top:50%;transform:translateY(-50%);display:none;flex-direction:column;gap:5px;z-index:4;max-height:80vh;overflow:auto;padding:8px;border-radius:14px;background:#0006;backdrop-filter:blur(6px);border:1px solid #ffffff22}
+  #dest::before{content:"어디로 갈까요?";font-size:12px;opacity:.7;padding:2px 4px 4px}
+  #dest button{padding:7px 14px;border-radius:999px;border:1px solid #ffffff33;background:#ffffff0d;color:#fff;font-size:13px;cursor:pointer;text-align:left;white-space:nowrap}
+  #dest button:hover{background:#2f8cff33}
+  #dest button.on{border-color:#ffd27a;color:#ffe9b8;box-shadow:0 0 12px #ffb84466}
+  @media (max-width:700px){#dest{top:auto;bottom:70px;transform:none;flex-direction:row;flex-wrap:wrap;max-width:calc(100vw - 28px);max-height:34vh}#dest::before{width:100%}}
+  .lbl{position:fixed;left:0;top:0;font-size:12px;color:#fff;white-space:nowrap;pointer-events:none;z-index:2;text-shadow:0 1px 3px #000;transform:translate(-50%,-140%);opacity:0;transition:opacity .4s}
+  .lbl::after{content:"";position:absolute;left:50%;top:100%;width:1px;height:10px;background:#ffffff88}
+  #load{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:radial-gradient(circle at 50% 40%,#10203a,#000 70%);z-index:9;transition:opacity .6s}
+  #load h1{margin:0;font-size:24px;font-weight:600;letter-spacing:.05em}
+  #load p{margin:0;font-size:13px;opacity:.75}
+  #go{padding:11px 26px;border-radius:999px;border:1px solid #9fd8ff;background:#2f8cff22;color:#e6f4ff;font-size:15px;cursor:pointer;display:none}
+</style>
+</head>
+<body>
+<div id="hud">
+  <div style="opacity:.55;font-size:11px">건물·도로: © OpenStreetMap 기여자 (ODbL) · 텍스처: ambientCG (CC0) · 지구: NASA</div>
+  <div><b>드래그</b> 둘러보기 · <b>WASD</b> 걷기(지상) · <b>Space</b> 누르고 있으면 상승 · <b>휠 / Q·E</b> 고도 조절 · <b>🚀 자유 비행</b>으로 달·태양·행성·별·은하로 순간이동</div>
+  <div id="fps" style="opacity:.6"></div>
+</div>
+<div id="dest"></div>
+<div id="scale"><i id="knob"></i></div>
+<div id="alt"><div class="v" id="altv">1.6 m</div><div class="p" id="altp">10^0.2 m</div></div>
+<div id="cap"><div class="t" id="capt"></div><div class="s" id="caps"></div></div>
+<div id="btns">
+  <button id="up">▲ 누르고 있으면 상승</button>
+  <button id="free">🚀 자유 비행</button>
+  <button id="auto">자동 여행: 강남역 → 우주 끝</button>
+  <button id="home">착륙(강남역으로)</button>
+  <button id="snd" class="on">소리</button>
+</div>
+<div id="load"><h1>강남역에서 우주 끝까지</h1><p id="lmsg">불러오는 중…</p><button id="go">출발하기</button></div>
+<script type="module" src="space.js"></script>
+</body>
+</html>
